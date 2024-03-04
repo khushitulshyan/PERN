@@ -1,0 +1,25 @@
+version: latest
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"      
+    volumes:
+      - './database/init:/docker-entrypoint-initdb.d/'
+  server:
+    build: ./server
+    # restart: always
+    ports:
+      - "5000:5000"
+  client:
+    build: ./client
+    # restart: always
+    ports:
+      - "80:80"
+volumes:
+  pgdata: {}
